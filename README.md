@@ -32,8 +32,8 @@ Documentazione-URLcompleto(esempi)
 
 -Tutte le carte,http://localhost:8080/api/cards
 -Singola carta per ID,http://localhost:8080/api/cards/(74b4862a-8772-4d7a-8f55-24285b02657d, ecc)
--Ricerca carte per nome,http://localhost:8080/api/cards/search?name=(Venerated rotpriest,Abhorrent oculus,ecc)
--Filtra carte per rarità,http://localhost:8080/api/cards/rarity/(mythic,rare,common,uncommon)
+-Ricerca carte per nome,http://localhost:8080/api/cards/search?name= (Venerated rotpriest,Abhorrent oculus,ecc)
+-Filtra carte per rarità,http://localhost:8080/api/cards/rarity/ (mythic,rare,common,uncommon)
 -Filtra carte per set,http://localhost:8080/api/cards/set/(khm,one,dsk,ecc)
 -Filtra carte per tipo,http://localhost:8080/api/cards/type?typeLine=(Creature,Planswalker,Enchantment,Scorcery,ecc)
 -Filtra carte per colore o combinazione di colori,http://localhost:8080/api/cards/color?color=(usare una singola lettera per cercare carte di un colore,piu lettere dopo la virgola per combinazione di colori R,B,W,U,G )
