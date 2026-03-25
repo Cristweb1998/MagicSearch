@@ -1,65 +1,38 @@
 MagicSearch: Advanced MTG Data Engine & REST API
+Descrizione del Progetto : MagicSearch è un'applicazione Back-End professionale sviluppata con Java 21 e Spring Boot 3.5. Il sistema implementa una pipeline ETL (Extract, Transform, Load) completa per digitalizzare i dati di Magic: The Gathering dalle API ufficiali di Scryfall in un database locale MySQL altamente ottimizzato.
 
-DESCRIZIONE PROGETTO
-è un applicazione Back-End sviluppata con java 21 e Spring boot 3.5.
-Il sistema implementa una pipeline ETL (Extract, Transform, Load) completa
-per digitalizzare i dati delle carte di Magic: The Gathering dalle API ufficiali di Scryfall 
-in database locale altamente ottimizzato.
+1 PUNTI DI FORZA E INNOVAZIONI TECNOLOGICHE
+Modern Java Stack: Sviluppato con Java 21 e Spring Boot 3.5.11.
+Interactive API Docs (Swagger): Integrazione nativa con SpringDoc OpenAPI per testare gli endpoint in tempo reale.
+Reactive Networking: Utilizzo di WebFlux (WebClient) con buffer a 10MB per gestire payload JSON massivi.
+Data Quality & Unicode Sanitization: Sistema di pulizia integrato (CardNameCleanupService) per risolvere anomalie Unicode (\u00A0).
+Smart Rate Limiting: Delay di 110ms per rispettare le policy di Scryfall (max 10 req/sec).
 
-PUNTI DI FORZA DEL PROGETTO
-- Modern Java Stack: Sviluppato con Java 21, sfruttando le ultime ottimizzazioni della JVM e le funzionalità di Spring Boot 3.5.
-- Reactive Data Sourcing: Utilizzo di Spring WebFlux (WebClient) per il consumo non bloccante di API esterne,
-  con gestione intelligente del buffer (10MB) per gestire payload JSON massivi.
-- Interactive API Docs: Integrazione nativa con SpringDoc OpenAPI (Swagger) per la documentazione e il testing interattivo degli endpoint.
-- Unicode-Ready Database: Schema MySQL configurato specificamente in utf8mb4_unicode_ci per preservare l'integrità dei simboli speciali.
+2 STACK TECNOLOGICO
+(Tecnologia-Modulo Maven-Utilizzo)
+Java 21,java.version,Performance e gestione moderna delle stringhe.Spring Boot 3.5,spring-boot-starter-parent,Framework core e architettura a layer.WebFlux,spring-webflux,Client HTTP reattivo per l'importazione dati.Swagger UI,springdoc-openapi,Interfaccia grafica per il testing delle API.MySQL 8.0,mysql-connector-j,Database relazionale con supporto Unicode.
 
-STACK TECNOLOGICO E DIPENDENZE
-Modulo-Tecnologia-Utilizzo
-Core,Java 21 / Spring Boot 3.5,Motore principale dell'applicazione.
-Data, Spring Data JPA / Hibernate,Gestione della persistenza e mappatura ORM.
-Networking ,WebFlux / WebClient,Chiamate HTTP asincrone verso Scryfall.
-Database,MySQL 8.0,Persistenza dei dati con supporto Unicode completo.
-Docs,SpringDoc OpenAPI,Generazione automatica dell'interfaccia Swagger UI.
+3 API ENDPOINTS (Documentazione Completa)
+Una volta avviata l'applicazione, la console interattiva è disponibile qui:
+->  http://localhost:8080/swagger-ui/index.html
 
-API ENDPOINT E DOCUMENTAZIONE
-Una volta avviata l'applicazione, la documentazione interattiva è disponibile qui:
-http://localhost:8080/swagger-ui/index.html
+Metodi di Lettura (GET)Questi endpoint interrogano il database locale e restituiscono oggetti JSON.
 
-endopint(GET)
-Questi endpoint servono per leggere i dati dal database. Restituiscono oggetti JSON o liste di oggetti.
+Tutte le carte : http://localhost:8080/api/cards -> Ritorna la lista completa di tutte le carte salvate.
 
-Documentazione-URLcompleto(esempi)
+Singola carta per ID : http://localhost:8080/api/cards/{id} -> Cerca una carta tramite il suo ID univoco Scryfall (es 02fb5f9f-8750-4eb5-a03a-6dacc60e0b90).
 
--Tutte le carte,http://localhost:8080/api/cards
--Singola carta per ID,http://localhost:8080/api/cards/ cerchiamo la carta attraverso il suo  id (74b4862a-8772-4d7a-8f55-24285b02657d, ecc)
--Ricerca carte per nome,http://localhost:8080/api/cards/search?name= inseriamo il nome della carta che stiamo cercando (Venerated rotpriest,Abhorrent oculus,ecc)
--Filtra carte per rarità,http://localhost:8080/api/cards/rarity/ cerchiamo le rarita delle carte (mythic,rare,common,uncommon)
--Filtra carte per set,http://localhost:8080/api/cards/set/ cerchiamo un set di carte che vogliamo (khm,one,dsk,ecc)
--Filtra carte per tipo,http://localhost:8080/api/cards/type?typeLine= cerchiamo il tipo di carte che vogliamo (Creature,Planswalker,Enchantment,Scorcery,ecc)
--Filtra carte per colore o combinazione di colori Il sistema utilizza le iniziali standard del formato Magic: The Gathering. La ricerca viene effettuata tramite l'operatore LIKE %color% sulla stringa dei colori salvata nel database. Iniziali Supportate W (White) | U (Blue) | B (Black) | R (Red) | G (Green) esempio http://localhost:8080/api/cards/color?color=R questa URL con la R trova tute le carte che sono rosso mentre localhost:8080/api/cards/color?color=R,W trova tutte le carte multicolore che sono sia rosse che bianche, Attenzione Nota: Per le carte multicolore, la ricerca segue l'ordine standard dei colori (W,U,B,R,G). Cercare R,W restituirà risultati solo se i colori sono stati salvati in quell'ordine specifico.
--Filtra carte per prezzo,http://localhost:8080/api/cards/price?maxPrice= cerchiamo tutte le carte in base al prezzo mettiamo (10.50,8.34.2.56.12.98,ecc)
+Ricerca per Nome : http://localhost:8080/api/cards/search?name={nome} -> Ricerca di una carta parziale e case-insensitive in base al suo nome (es. ?name=Venerated rotpriet, o venerated).
 
-Endpoint di Sistema e Manutenzione (POST)
-Questi endpoint attivano logiche di business pesanti (importazione esterna o pulizia massiva del DB).
+Filtro per Rarità :  http://localhost:8080/api/cards/rarity/{rarity} -> Filtra carte in base alle sue rarità (es. common, uncommon, rare, mythic).
 
-Descrizione-URL Completo (Esempio)
-Importazione Set,	http://localhost:8080/api/cards/import/ importazione del set (khm,dsk,ecc)
-Pulizia Nomi DB,	http://localhost:8080/api/cards/cleanup/names pulizia del DB
+Filtro per Set : http://localhost:8080/api/cards/set/{setCode} -> Filtra carte  per codice del set (es. dsk, mkm, one,ecc).
 
+Filtro per Tipo : http://localhost:8080/api/cards/type?typeLine={tipo} -> Cerca per tipo di carte (es. ?typeLine=Creature,?typeLine=Enchantment,?typeLine=Sorcery,ecc).
 
+Filtro per Colore : http://localhost:8080/api/cards/color?color={codice} -> Supporta colori singoli per carte (W=White, U=blue, B=Black, R=Red, G=Green) o combinazioni di colori per carte multicolore separate da virgola (es. R,W Per le carte multicolore  rosse e bianche), nota bene: la ricerca segue l'ordine standard dei colori (W,U,B,R,G). Cercare R,W restituirà risultati solo se i colori sono stati salvati in quell'ordine specifico.
 
-Il progetto implementa una logica di sanificazione dati per correggere anomalie comuni nelle API esterne (come gli spazi non-breaking Unicode \u00A0). I nomi vengono normalizzati automaticamente durante l'importazione, garantendo ricerche esatte e database pulito.
-
- Installazione Rapida
-Clona il repository.
-
-Crea un database MySQL Magic_db con codifica utf8mb4_unicode_ci.
-
-Configura le tue credenziali in src/main/resources/application.properties.
-
-Esegui mvn spring-boot:run.
-
-AutoreCristian Bruno.
+Filtro per Prezzo : http://localhost:8080/api/cards/price?maxPrice={valore} -> ": Prende solo le carte che costano quanto o meno della cifra indicata ($prezzo \le 10.50$).Pulizia dei Dati (Null Check): Scarta automaticamente tutte le carte che non hanno un prezzo assegnato (molte carte promozionali o rarissime su Scryfall hanno il campo prezzo vuoto). Questo evita di mostrare risultati "sporchi".Ordinamento per Rilevanza: Ordina i risultati dal più caro al più economico (DESC). Questo è utilissimo perché l'utente che cerca carte "fino a 10€" di solito è interessato a vedere prima le carte che valgono vicino a 10€, non quelle da 0.02€.
 
 
 
