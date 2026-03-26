@@ -77,7 +77,7 @@ mvn spring-boot:run  (avvia l'applicazione Spring Bott immediatamente)
 🖥️ Anteprima Interfaccia Swagger UI
 Ecco come appare la documentazione interattiva generata automaticamente, che permette di testare gli endpoint in tempo reale:
 
-![Interfaccia MagicSearch](img/Magicinterface.png)
+
 
 Autore: Cristian Bruno
 
