@@ -47,21 +47,30 @@ Performance: Il filtraggio dei prezzi è ottimizzato lato database tramite query
 (IDE-Independent)
 Il progetto è configurato con Maven, il che permette di compilarlo ed eseguirlo su qualsiasi macchina (Windows, Mac, Linux) senza la necessità di un IDE (come Eclipse o IntelliJ).
 
-(1) Prerequisiti
+(1)Prerequisiti
+
 Java 21 (JDK) installato.
+
 Maven 3.x installato.
+
 MySQL 8.0 attivo e funzionante.
 
 (2)Configurazione Database
+
 Crea uno schema chiamato Magic_db.
+
 Esegui lo script SQL che trovi nel progetto: /database/magic.sql.
+
 Modifica il file src/main/resources/application.properties con il tuo username e password di MySQL.
 
 (3)Avvio da Terminale (Bash/CMD)
+
 Apri il terminale nella cartella principale del progetto ed esegui:
 
 Bash
+
 mvn clean install (Pulisce i vecchi file e scarica le dipendenze dal pom.xml)
+
 mvn spring-boot:run  (avvia l'applicazione Spring Bott immediatamente)
 
 Autore: Cristian Bruno
