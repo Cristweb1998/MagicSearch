@@ -59,12 +59,10 @@ Modifica il file src/main/resources/application.properties con il tuo username e
 
 (3)Avvio da Terminale (Bash/CMD)
 Apri il terminale nella cartella principale del progetto ed esegui:
-Bash
-# 1. Pulisce i vecchi file e scarica le dipendenze del pom.xml
-mvn clean install
 
-# 2. Avvia l'applicazione Spring Boot immediatamente
-mvn spring-boot:run
+Bash
+mvn clean install (Pulisce i vecchi file e scarica le dipendenze dal pom.xml)
+mvn spring-boot:run  (avvia l'applicazione Spring Bott immediatamente)
 
 Autore: Cristian Bruno
 
